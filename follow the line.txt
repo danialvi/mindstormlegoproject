@@ -1,0 +1,28 @@
+from mindstorms import MSHub, Motor, MotorPair, ColorSensor, DistanceSensor, App
+from mindstorms.control import wait_for_seconds, wait_until, Timer
+from mindstorms.operator import greater_than, greater_than_or_equal_to, less_than, less_than_or_equal_to, equal_to, not_equal_to
+import math
+
+
+# Create your objects here.
+hub = MSHub()
+movement_motors = MotorPair('A','B')
+color_sensor =ColorSensor('E')
+
+# Write your program here.
+hub.speaker.beep()
+
+#binary line following
+"""
+while True:
+    if color_sensor.get_color()=='black':
+        movement_motors.start_tank(20,10)
+    else:
+        movement_motors.start_tank(10,20) 
+"""
+
+#proportional line following
+#at 50% reflect, we want the steer value to be 0
+movement_motors.set_default_speed(20)
+while True:
+    movement_motors.start(color_sensor.get_reflected_light()-50)
